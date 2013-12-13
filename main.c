@@ -14,9 +14,11 @@ Requirement:
 #include <util/delay.h>
 #include "atmega644p_gpio.h"
 #include "atmega644p_usart.h"
+#include "printf_code.h"
+#include "scanf_code.h"
 
 
-unsigned char c = '0';
+//unsigned char c = '0';
 uint16_t ch;
 uint8_t byte;
 int main(void)
@@ -81,12 +83,36 @@ int main(void)
 
     while(1)
     {
-        ch = USART_GetChar();
-        USART_PutChar(ch);
+        char c;
+        char *str;
+        uint32_t i;
+        uint32_t hex;
+
+        str = (char *) malloc(200 * sizeof(char));
+
+        // "\r" is used to make sure that CARRIAGE RETURN (start from the beggining of the line) is used
+        // "\n" is the NEW LINE (next line) is used!
+        print("Enter the values for integer i and character c:\n\r");
+        scan("%d %c", &i, &c);
+        //i = 45;
+        //x = 'i';
+        print("\n\rint i = %d char x = %c\n\r",i,c);
+
+        print("Enter an Hex number:\n\r");
+        scan("%x", &hex);
+        print("\n\rhex = %x", hex);
+        print("\n\rEnter String:\n\r");
+        scan("%s", str);
+        print("\n\rEntered String is:\n\r%s\n\r", str);
+
+        //ch = USART_GetChar();
+        //USART_PutChar(ch);
         //if(gReceive_Buffer_Full == 1)
         //{
         //    USART_ClearReceiveBuffer();
         //}
+
+        free(str);
     }
 
     return 0;
