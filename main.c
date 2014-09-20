@@ -25,9 +25,9 @@ int main(void)
 {
 
     // Insert code
-    /*
+    /******************************************************************
                     GPIO TEST
-    */
+    *******************************************************************/
     /*while(1)
     {
         GPIO_Write(GPIOB, PIN_ZERO, GPIO_PIN_SET);
@@ -38,11 +38,13 @@ int main(void)
         _delay_ms(500);
     }*/
 
-    /*
+    /******************************************************************
                     USART TEST
-    */
+    *******************************************************************/
 
-    /*SREG = SREG | 0x80; // enable Global interrupt!
+    //Bare Metal part
+	
+	/*SREG = SREG | 0x80; // enable Global interrupt!
     UCSR0A = 0x00;
     UCSR0B = 0x00;
     UCSR0C = 0x00;
@@ -69,7 +71,9 @@ int main(void)
         UDR0 = c;
     }
     */
-    USART_StructureType USART_Config;
+    
+	//Driver part
+	USART_StructureType USART_Config;
 
     USART_Config.USART_BaudRate = 19200;
     USART_Config.USART_Communication = BOTH;
