@@ -92,6 +92,9 @@ void print_Integer(const int32_t data, int length)
 
             while(val != 0 && i<length)
             {
+                //When nibble is >= 0x0A, you have to subtract 10 (or 0x0A) becuase:
+                //assume nibble is 0x0A, when oyu add char 'a'(decimal 97) its ascii value will be 107(in decimal)
+                //But you want yo display char 'a' not char 'k'(decimal 107). By subtracting 10 (0x0A) you will get 'a'
                 s[i] = (val & 0x0F) >=0x0A? ((val & 0x0F) + 'a') - 10 : (val & 0x0F) + '0';
                 val = val >> 4;
                 i++;
@@ -129,6 +132,7 @@ void print_Integer(const int32_t data, int length)
   * @param  *str - pointer to the string which needs to be analysed and printed!
   * @param  ... - unknown number of arguments!
   * @note	for printing unsinged numbers, hex values and long values needs modification!
+  *         For integers typecast the number by (uint32_t) or (int32_t) to print the proper value
   * @retval None
   */
 void print(const char *str, ...)
@@ -150,6 +154,9 @@ void print(const char *str, ...)
 								case 'x':
 								case 'X':
 											//assuming 10 digits is max for Decimal format(2^32) and 8 in hexadecimal - 32 bit machine!
+											//Note: These int or uint variable must have postfixed with _t, like int8_t or uint8_t
+											//      Else the print values may be different from what has been passed!
+											//      if _t is used then size is always fixed to those many bits!
 											print_Integer(va_arg(arg_list, const int32_t), (*str=='d'? 10: 8));
 										break;
 								case 'c':
